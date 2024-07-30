@@ -1,0 +1,345 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+    <!-- Thêm liên kết SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+    <style>
+        .video-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+
+    <style>
+        /* CSS cho modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Đổi độ mờ nền modal */
+            backdrop-filter: blur(5px);
+            /* Làm mờ nền phía sau modal */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            /* Giảm khoảng cách từ trên xuống */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            /* Bóng đổ mềm mại */
+            width: 90%;
+            max-width: 500px;
+            /* Giới hạn chiều rộng */
+            animation: modalFadeIn 0.5s;
+            /* Hiệu ứng mở modal */
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+                /* Dịch chuyển từ trên xuống */
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+
+        /* CSS cho các thẻ input trong modal */
+        .modal-content input[type="text"],
+        .modal-content input[type="password"] {
+            width: calc(100% - 40px);
+            /* Đảm bảo phù hợp với nội dung modal, trừ đi phần padding */
+            padding: 10px 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-content input[type="text"]:focus,
+        .modal-content input[type="password"]:focus {
+            border-color: #007bff;
+            /* Màu đường viền khi focus */
+            outline: none;
+            /* Bỏ viền outline mặc định */
+        }
+
+        .modal-content .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .modal-content .submit-btn:hover {
+            background-color: #0056b3;
+            /* Màu nền khi hover */
+        }
+
+        .modal-content .submit-btn:active {
+            background-color: #004085;
+            /* Màu nền khi active */
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section style="height: 200px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+            </section>
+
+
+            <section class="section" style="padding-top: 20px;">
+                <h1 style="text-align: center; font-size:50px; margin-bottom: 30px">Thông tin cá nhân</h1>
+                <div class="container">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-6 shop-media">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="image-wrap entry">
+                                            <img src="<%= user.user_avatar %>" alt="AAAAAAA">
+                                        </div>
+                                    </div>
+                                </div><!-- end row -->
+                            </div><!-- end col -->
+
+                            <div class="col-md-6">
+                                <div class="shop-desc">
+                                    <h1>
+                                        <%= user.user_full_name %>
+                                    </h1>
+                                    <small>
+                                        <i class="fa fa-envelope" aria-hidden="true"> Email: </i>
+                                        <%= user.user_email %>
+                                    </small>
+                                    <div class="shop-meta">
+                                        <button class="btn btn-primary" onclick="openPasswordModal()">Đổi mật
+                                            khẩu</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal Đổi Mật Khẩu -->
+            <div id="passwordModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closePasswordModal()"><i class="fa fa-times"
+                            aria-hidden="true"></i></span>
+                    <h2>Đổi Mật Khẩu</h2>
+                    <form id="passwordForm" onsubmit="changePassword(event)">
+                        <div class="form-group">
+                            <label for="oldPassword">Mật khẩu cũ</label>
+                            <input type="password" id="oldPassword" name="oldPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Mật khẩu mới</label>
+                            <input type="password" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    </form>
+                </div>
+            </div>
+    </div>
+
+
+
+
+    <!-- FOOTER -->
+    <%- include('../components/frontend/user_Footer') %>
+        </div><!-- end wrapper -->
+
+        <!-- jQuery Files -->
+        <script src="/frontend/user/js/jquery.min.js"></script>
+        <script src="/frontend/user/js/bootstrap.min.js"></script>
+        <script src="/frontend/user/js/carousel.js"></script>
+        <script src="/frontend/user/js/animate.js"></script>
+        <script src="/frontend/user/js/custom.js"></script>
+</body>
+
+<script>
+    function openPasswordModal() {
+        document.getElementById('passwordModal').style.display = 'block';
+    }
+
+    function closePasswordModal() {
+        document.getElementById('passwordModal').style.display = 'none';
+    }
+
+    async function changePassword(event) {
+        event.preventDefault();
+
+        // Lấy giá trị từ form
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Kiểm tra mật khẩu mới và xác nhận khớp nhau
+        if (newPassword !== confirmPassword) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Mật khẩu mới và xác nhận mật khẩu không khớp!',
+            });
+            return;
+        }
+
+        try {
+            // Gửi yêu cầu đổi mật khẩu lên server
+            const response = await fetch('/user/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    oldPassword: oldPassword,
+                    newPassword: newPassword,
+                }),
+            });
+
+            const result = await response.json();
+
+            // Kiểm tra nếu đổi mật khẩu thành công
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công',
+                    text: 'Đổi mật khẩu thành công! Bạn cần đăng nhập lại',
+                }).then(() => {
+                    closePasswordModal();
+                    document.getElementById('passwordForm').reset();
+                    window.location.href = '/user/logout';
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: result.message || 'Đã xảy ra lỗi khi đổi mật khẩu.',
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Đã xảy ra lỗi khi kết nối với server.',
+            });
+        }
+    }
+</script>
+
+
+
+</html>

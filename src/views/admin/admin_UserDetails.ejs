@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Admin Sign Language Dictionary</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="/assets/img/kaiadmin/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar" data-background-color="dark">
+            <!-- Sidebar Logo Header -->
+            <%- include('../components/sideBar_logo') %>
+                <!-- Sidebar Logo Header -->
+
+                <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                    <div class="sidebar-content">
+                        <ul class="nav nav-secondary">
+                            <!-- Dashboard -->
+                            <li class="nav-item active">
+                                <a data-bs-toggle="collapse" href="index" class="collapsed" aria-expanded="false">
+                                    <i class="fas fa-home"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+
+                            <!-- Component -->
+                            <li class="nav-section">
+                                <span class="sidebar-mini-icon">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </span>
+                                <h4 class="text-section">Components</h4>
+                            </li>
+
+                            <!-- Manage User -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageUser">
+                                    <i class="fas fa-users"></i>
+                                    <p>Manage User</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageUser">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="/admin/list-user">
+                                                <span class="sub-item">List of Users</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Manage Words -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageWord">
+                                    <i class="fab fa-weebly"></i>
+                                    <p>Manage Word</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageWord">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="/admin/list-vocabulary">
+                                                <span class="sub-item">List of Words</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/admin/list-recommendation-vocabulary">
+                                                <span class="sub-item">List of Recommend Words</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Manage Topic -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageTopic">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Manage Topic</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageTopic">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="/admin/list-topic">
+                                                <span class="sub-item">List of Topics</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Upload model -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#uploadModel">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Upload model</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse " id="uploadModel">
+                                    <ul class="nav nav-collapse">
+                                        <li class="">
+                                            <a href="/upload-model">
+                                                <span class="sub-item">UploadModel</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <!--  HEADER  -->
+            <%- include('../components/navBar_mainHeader') %>
+                <!-- END HEADER -->
+
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="col-md-12">
+                            <div class="card card-profile">
+                                <div class="card-header" style="background-image: url('/assets/img/blogpost.jpg')">
+                                    <div class="profile-picture">
+                                        <div class="avatar avatar-xl">
+                                            <img src="" alt="..." class="avatar-img rounded-circle" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="user-profile text-center">
+                                        <div class="name">
+                                            <h1>
+                                                <%= user.user_full_name %>
+                                            </h1>
+                                        </div>
+
+                                        <div class="desc">
+                                            <h5 class="fa fa-envelope">
+                                                <%= user.user_email %>
+                                            </h5>
+                                        </div>
+
+                                        <div class="desc">
+                                            <h5 class="fa fa-envelope">
+                                                <%= user.user_phone_number %>
+
+                                            </h5>
+                                        </div>
+
+                                        <div class="social-media">
+                                            <a class="btn btn-info btn-twitter btn-sm btn-link" href="#">
+                                                <span class="btn-label just-icon"><i class="icon-social-twitter"></i>
+                                                </span>
+                                            </a>
+                                            <a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#">
+                                                <span class="btn-label just-icon"><i class="icon-social-facebook"></i>
+                                                </span>
+                                            </a>
+                                            <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
+                                                <span class="btn-label just-icon"><i class="icon-social-instagram"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row user-stats text-center">
+                                        <div class="col">
+                                            <div class="number">125</div>
+                                            <div class="title">Post</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="number">25K</div>
+                                            <div class="title">Followers</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="number">134</div>
+                                            <div class="title">Following</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+        </div>
+
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+
+    <!-- FUNCTION TO LOGOUT -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/admin/logOut.js"></script>
+</body>
+
+</html>

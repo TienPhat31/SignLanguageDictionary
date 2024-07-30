@@ -1,0 +1,188 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+    <!-- CSS cho chủ đề -->
+    <style>
+        .caro-item {
+            width: 100%;
+            max-width: 300px;
+            /* Đặt chiều rộng tối đa cho các mục */
+            height: 450px;
+            /* Chiều cao cố định */
+            overflow: hidden;
+            /* Đảm bảo nội dung không vượt ra ngoài khung */
+            margin: 0 auto;
+            /* Căn giữa các mục */
+        }
+
+        .course-box {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .image-wrap {
+            height: 60%;
+            /* Chiều cao phần hình ảnh */
+            overflow: hidden;
+        }
+
+        .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Đảm bảo hình ảnh lấp đầy khung */
+        }
+
+        .course-details {
+            padding: 10px;
+            height: 30%;
+            /* Chiều cao phần chi tiết */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Đảm bảo văn bản không vượt quá khung */
+        }
+
+        .course-footer {
+            padding: 10px;
+            height: 10%;
+            /* Chiều cao phần footer */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section class="section db p120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center" style="margin-top: 50px;">
+                                <h3>Liên hệ</h3>
+                                <ul class="breadcrumb">
+                                    <li><a href="javascript:void(0)">Trang chủ</a></li>
+                                    <li class="active">Liên hệ</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section gb nopadtop">
+                <div class="container">
+                    <div class="boxed boxedp4">
+                        <div class="row contactv2 text-center">
+                            <div class="col-md-4">
+                                <div class="small-box">
+                                    <i class="flaticon-email wow fadeIn"></i>
+                                    <h4>Liên hệ chúng tôi</h4>
+                                    <small>Điên thoại: +90 987 665 55 44</small>
+                                    <p><a href="mail:to">info@gmail.com</a></p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="small-box">
+                                    <i class="flaticon-map-with-position-marker wow fadeIn"></i>
+                                    <h4>Đia chỉ văn phòng</h4>
+                                    <small>Quan 7, Ho Chi Minh, Viet Nam</small>
+                                    <p><a href="#">Xem trên Google Map</a></p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="small-box">
+                                    <i class="flaticon-share wow fadeIn"></i>
+                                    <h4>Mạng xã hội</h4>
+                                    <small>Twitter: @yourhandle</small>
+                                    <small>Facebook: facebook.com/yourhandle</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="section-title text-center">
+                                    <h3>Liên hệ hỗ trợ</h3>
+                                </div><!-- end title -->
+
+                                <form class="big-contact-form" role="search">
+                                    <input type="text" class="form-control" placeholder="Họ và tên..">
+                                    <input type="email" class="form-control" placeholder="Nhập Email..">
+                                    <input type="text" class="form-control" placeholder="Số điện thoại..">
+                                    <input type="text" class="form-control" placeholder="Tiêu đề..">
+                                    <textarea class="form-control" placeholder="Nội dung.."></textarea>
+                                    <button type="submit" class="btn btn-primary">Gửi</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <%- include('../components/frontend/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+</body>
+
+</html>

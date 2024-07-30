@@ -1,0 +1,372 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Model</title>
+</head>
+
+<body>
+    <h1>Upload Your Trained Model</h1>
+    Go to training at <a href="https://teachablemachine.withgoogle.com/" target="_blank">Teachable Machine</a>
+    <p>Then upload: metadata.json | model.json | weights.bin</p>
+    <form action="/admin/upload-model" method="post" enctype="multipart/form-data">
+        <input type="file" name="modelFiles" multiple required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="/assets/img/kaiadmin/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    <style>
+        /* Định dạng form */
+        form {
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Định dạng input file */
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            font-size: 16px;
+        }
+
+        input[type="file"]::file-selector-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Định dạng nút bấm */
+        button.btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        button.btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button.btn-primary:active {
+            background-color: #004080;
+            transform: scale(1);
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar" data-background-color="dark">
+            <!-- Sidebar Logo Header -->
+            <%- include('../components/sideBar_logo') %>
+                <!-- Sidebar Logo Header -->
+
+                <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                    <div class="sidebar-content">
+                        <ul class="nav nav-secondary">
+                            <!-- Dashboard -->
+                            <li class="nav-item active">
+                                <a data-bs-toggle="collapse" href="index" class="collapsed" aria-expanded="false">
+                                    <i class="fas fa-home"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+
+                            <!-- Component -->
+                            <li class="nav-section">
+                                <span class="sidebar-mini-icon">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </span>
+                                <h4 class="text-section">Components</h4>
+                            </li>
+
+                            <!-- Manage User -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageUser">
+                                    <i class="fas fa-users"></i>
+                                    <p>Manage User</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageUser">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="list-user">
+                                                <span class="sub-item">List of Users</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Manage Words -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageWord">
+                                    <i class="fab fa-weebly"></i>
+                                    <p>Manage Word</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageWord">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="list-vocabulary">
+                                                <span class="sub-item">List of Words</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Manage Topic -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageTopic">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Manage Topic</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageTopic">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="list-topic">
+                                                <span class="sub-item">List of Topics</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Upload model -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#uploadModel">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Upload model</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse show" id="uploadModel">
+                                    <ul class="nav nav-collapse">
+                                        <li class="active">
+                                            <a href="/upload-model">
+                                                <span class="sub-item">UploadModel</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <!--  HEADER  -->
+            <%- include('../components/navBar_mainHeader') %>
+                <!--  END HEADER  -->
+
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h1 class="fw-bold mb-3">Upload video</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-3 col-md-2">
+                                                <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd nav-pills-icons"
+                                                    id="v-pills-tab-with-icon" role="tablist"
+                                                    aria-orientation="vertical">
+                                                    <a class="nav-link active" id="v-pills-home-tab-icons"
+                                                        data-bs-toggle="pill" href="#v-pills-home-icons" role="tab"
+                                                        aria-controls="v-pills-home-icons" aria-selected="true">
+                                                        <i class="
+                                                        icon-settings"></i>
+                                                        Trainning
+                                                    </a>
+                                                    <a class="nav-link" id="v-pills-profile-tab-icons"
+                                                        data-bs-toggle="pill" href="#v-pills-profile-icons" role="tab"
+                                                        aria-controls="v-pills-profile-icons" aria-selected="false">
+                                                        <i class="
+                                                        icon-cloud-upload"></i>
+                                                        Upload video
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-9 col-md-10">
+                                                <div class="tab-content" id="v-pills-with-icon-tabContent">
+                                                    <div class="tab-pane fade show active" id="v-pills-home-icons"
+                                                        role="tabpanel" aria-labelledby="v-pills-home-tab-icons">
+                                                        <img src="/images/teach.jpg" alt="">
+                                                        <h1 style="font-size: 40px; justify-content:center"> Go to
+                                                            training at <a style="color: blue;"
+                                                                href="https://teachablemachine.withgoogle.com/"
+                                                                target="_blank">Teachable Machine</a></h1>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-profile-icons"
+                                                        role="tabpanel" aria-labelledby="v-pills-profile-tab-icons">
+                                                        <h1 style="font-size: 40px; text-align:center">Then upload:
+                                                            <span style="font-weight: bold;">metadata.json</span> |
+                                                            <span style="font-weight: bold;">model.json</span> | <span
+                                                                style="font-weight: bold;">weights.bin</span>
+                                                        </h1>
+                                                        <form id="uploadForm" action="/admin/upload-model" method="post"
+                                                            enctype="multipart/form-data">
+                                                            <input type="file" id="modelFiles" name="modelFiles"
+                                                                multiple required>
+                                                            <button class="btn btn-primary" type="submit">Upload
+                                                                File</button>
+                                                        </form>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <%- include('../components/footer') %>
+        </div>
+
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+    <!-- FUNCTION TO LOGOUT -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/admin/logOut.js"></script>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+        const fileInput = document.getElementById('modelFiles');
+        const files = fileInput.files;
+        const allowedFiles = ['metadata.json', 'model.json', 'weights.bin'];
+
+        for (const file of files) {
+            if (!allowedFiles.includes(file.name)) {
+                e.preventDefault(); // Ngăn chặn gửi form
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File',
+                    html: `Only the following files are allowed: <br>
+                           <strong>metadata.json</strong> | 
+                           <strong>model.json</strong> | 
+                           <strong>weights.bin</strong>`,
+                });
+                return;
+            }
+        }
+    });
+</script>
+
+
+
+</html>

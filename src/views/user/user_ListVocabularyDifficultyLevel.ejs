@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary List by Difficulty Level</title>
+</head>
+<body>
+    <h1>Vocabulary List by Difficulty Level</h1>
+    <ul>
+        <% list_vocabulary_difficulty_level.forEach(item => { %>
+            <li><a href="/user/detail-vocabulary/<%= item._id %>"><%= item.vocabulary_name %></a></li>
+        <% }) %>
+    </ul>
+    <a href="/user/list-difficulty-level">Back to difficulty levels</a>
+</body>
+</html>

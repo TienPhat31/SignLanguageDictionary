@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Admin Sign Language Dictionary</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="/assets/img/kaiadmin/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar" data-background-color="dark">
+            <!-- Sidebar Logo Header -->
+            <%- include('../components/sideBar_logo') %>
+                <!-- Sidebar Logo Header -->
+
+                <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                    <div class="sidebar-content">
+                        <ul class="nav nav-secondary">
+                            <!-- Dashboard -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="index" class="collapsed" aria-expanded="false">
+                                    <i class="fas fa-home"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+
+                            <!-- Component -->
+                            <li class="nav-section">
+                                <span class="sidebar-mini-icon">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </span>
+                                <h4 class="text-section">Components</h4>
+                            </li>
+
+                            <!-- Manage User -->
+                            <li class="nav-item active">
+                                <a data-bs-toggle="collapse" href="#manageUser">
+                                    <i class="fas fa-users"></i>
+                                    <p>Manage User</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse show" id="manageUser">
+                                    <ul class="nav nav-collapse">
+                                        <li class="active">
+                                            <a href="">
+                                                <span class="sub-item">List of Users</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Manage Words -->
+                            <li class="nav-item ">
+                                <a data-bs-toggle="collapse" href="#manageWord">
+                                    <i class="fab fa-weebly"></i>
+                                    <p>Manage Word</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageWord">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="list-vocabulary">
+                                                <span class="sub-item">List of Words</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="list-recommendation-vocabulary">
+                                                <span class="sub-item">List of Recommend Words</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Manage Topic -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#manageTopic">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Manage Topic</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="manageTopic">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="list-topic">
+                                                <span class="sub-item">List of Topics</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Upload model -->
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#uploadModel">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <p>Upload model</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse " id="uploadModel">
+                                    <ul class="nav nav-collapse">
+                                        <li class="">
+                                            <a href="/upload-model">
+                                                <span class="sub-item">UploadModel</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <!--  HEADER  -->
+            <%- include('../components/navBar_mainHeader') %>
+                <!-- END HEADER -->
+
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h3 class="fw-bold mb-3">List of users</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="add-row" class="display table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Avatar</th>
+                                                        <th>User name</th>
+                                                        <th>Email</th>
+                                                        <th>Password</th>
+                                                        <th>Status</th>
+                                                        <!-- <th style="width: 30%">Video</th> -->
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% list_user.forEach(user=> { %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= user.user_avatar %>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admin/detail-user/<%= user._id %>">
+                                                                    <%= user.user_full_name %>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <%= user.user_email %>
+                                                            </td>
+                                                            <td>
+                                                                <span class="password-short"
+                                                                    data-password="<%= user.user_password %>"></span>
+                                                            </td>
+                                                            <td style="font-weight: bold;"
+                                                                class="<%= user.user_status ? 'text-success' : 'text-danger' %>">
+                                                                <%= user.user_status ? 'Unlock' : 'Lock' %>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-button-action">
+                                                                    <button type="button" class="btn btn-success"
+                                                                        id="alert_demo_4" data-id="<%= user._id %>"
+                                                                        data-status="<%= user.user_status %>">
+                                                                        Status
+                                                                    </button>
+                                                                    <!-- <button type="button" data-bs-toggle="tooltip" title=""
+                                                                    class="btn btn-link btn-danger delete-icon"
+                                                                    data-id="<%= user._id %>"
+                                                                    data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button> -->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <% }) %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%- include('../components/footer') %>
+        </div>
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+
+    <!-- Sweet Alert -->
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#basic-datatables").DataTable({});
+
+            $("#multi-filter-select").DataTable({
+                pageLength: 5,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var column = this;
+                            var select = $(
+                                '<select class="form-select"><option value=""></option></select>'
+                            )
+                                .appendTo($(column.footer()).empty())
+                                .on("change", function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column
+                                        .search(val ? "^" + val + "$" : "", true, false)
+                                        .draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    select.append(
+                                        '<option value="' + d + '">' + d + "</option>"
+                                    );
+                                });
+                        });
+                },
+            });
+
+            // Add Row
+            $("#add-row").DataTable({
+                pageLength: 5,
+            });
+
+        });
+    </script>
+
+    <!-- FUNCTION TO LOGOUT -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/admin/logOut.js"></script>
+
+    <!-- FUNCTION CLOSE MODAL -->
+    <script>
+        $(document).ready(function () {
+            // Sự kiện lắng nghe khi nhấn vào nút đóng
+            $('.closeModalButton').click(function () {
+                $('#addVocbularyModal').modal('hide');
+            });
+
+            $('.closeModalButton').click(function () {
+                $('#editVocbularyModal').modal('hide');
+            });
+
+        });
+    </script>
+
+    <!-- EDIT VOCAB FUNCTION -->
+    <script>
+        // Truyền data cho EDIT modal
+        document.querySelectorAll('#edit-icon').forEach(button => {
+            button.addEventListener('click', function () {
+                const vocabularyId = this.getAttribute('data-id');
+
+                axios.post(`/admin/list-vocabulary/${vocabularyId}`)
+                    .then(response => {
+                        const vocabulary = response.data;
+
+                        // Điền dữ liệu vào các trường trong modal
+                        document.getElementById('edit_vocabulary_name').value = vocabulary.vocabulary_name;
+                        document.getElementById('edit_vocabulary_topic').value = vocabulary.vocabulary_topic;
+                        document.getElementById('edit_vocabulary_difficulty_level').value = vocabulary.vocabulary_difficulty_level;
+                        document.getElementById('edit_vocabulary_video').innerText = vocabulary.vocabulary_video_link;
+
+                        const saveButton = document.getElementById('editRowButton');
+                        saveButton.setAttribute('data-id', vocabularyId);
+                        // Hiển thị modal
+                        $('#editVocbularyModal').modal('show');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching vocabulary:', error);
+                    });
+            });
+        });
+
+        document.getElementById('editRowButton').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const vocabularyID = this.getAttribute('data-id');
+
+            alert(vocabularyID)
+
+            const form = document.getElementById('editVocabulary_form');
+            const isValid = form.checkValidity();
+
+            if (!isValid) {
+                form.reportValidity();
+            } else {
+
+                const vocabularyName = document.getElementById('edit_vocabulary_name').value;
+                const topic = document.getElementById('edit_vocabulary_topic').value;
+                const difficultyLevel = document.getElementById('edit_vocabulary_difficulty_level').value;
+                const videoInput = document.getElementById('edit_vocabulary_video')
+
+
+                const formData = new FormData();
+                formData.append('vocabulary_name', vocabularyName);
+                formData.append('vocabulary_topic', topic);
+                formData.append('vocabulary_difficulty_level', difficultyLevel);
+                formData.append('vocabulary_video_link', videoInput.files[0]);
+
+                // Gửi dữ liệu lên API
+                axios.put(`/admin/edit-vocabulary/${vocabularyID}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(response => {
+                        console.log('Vocabulary added successfully:', response.data);
+                        swal("Edit successfully!", {
+                            icon: "success",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-success",
+                                },
+                            },
+                        }).then(() => {
+                            $('#editVocbularyModal').modal('hide');
+                            window.location.href = "/admin/list-vocabulary";
+
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error adding vocabulary:', error);
+                        swal("Failed to edit vocabulary!", {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    });
+            }
+        });
+    </script>
+
+    <!-- DELETE VOCABULARY FUNCTION -->
+    <script>
+        $(".delete-icon").click(function (e) {
+            const vocabularyID = this.getAttribute('data-id');
+            alert(vocabularyID)
+            swal({
+                title: "Are you sure you delete ?",
+                icon: "warning",
+                buttons: {
+                    cancel: {
+                        value: false,
+                        visible: true,
+                        text: "Cancel",
+                        className: "btn btn-success",
+                    },
+                    confirm: {
+                        value: true,
+                        text: "Delete",
+                        className: "btn btn-danger",
+                    },
+                },
+            }).then((willLogout) => {
+                if (willLogout) {
+                    // Gọi API logout bằng Axios
+                    axios.delete(`delete-vocabulary/${vocabularyID}`, {})
+                        .then(response => {
+                            swal("Delete successfully", {
+                                icon: "success",
+                                buttons: {
+                                    confirm: {
+                                        className: "btn btn-success",
+                                    },
+                                },
+                            }).then(() => {
+                                window.location.href = "/admin/list-vocabulary";
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            swal("Failed to delete !", {
+                                buttons: {
+                                    confirm: {
+                                        className: "btn btn-danger",
+                                    },
+                                },
+                            });
+                        });
+                } else {
+                    swal("Failed to delete !", {
+                        buttons: {
+                            confirm: {
+                                className: "btn btn-danger",
+                            },
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- SHORT PASSWORD -->
+    <script>
+        function shortenPassword(password, length = 10) {
+            if (typeof password !== 'string') return '';
+            return password.length > length ? password.substring(0, length) + '...' : password;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.password-short').forEach(span => {
+                const password = span.getAttribute('data-password');
+                span.textContent = shortenPassword(password, 10);
+            });
+        });
+    </script>
+
+    <!-- CHANGE STATUS USER -->
+    <script>
+        $("#alert_demo_4").click(function (e) {
+            swal({
+                title: "Change status",
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "Confirm",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true,
+                    },
+                    cancel: {
+                        value: false,
+                        visible: true,
+                        text: "Cancel",
+                        className: "btn btn-danger",
+                    },
+                },
+            }).then((willChange) => {
+                if (willChange) {
+                    const userId = $(this).data('id');
+                    const status = $(this).data('status');
+
+
+                    axios.post(`/admin/change-status-user/${userId}`, { status: status })
+                        .then(response => {
+                            swal("Status changed successfully!", {
+                                icon: "success",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error changing status:', error);
+                            swal("Failed to change status!", {
+                                icon: "error",
+                            });
+                        });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

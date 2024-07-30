@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Result</title>
+</head>
+<body>
+    <h1>Practice Result</h1>
+    <% results.forEach(result => { %>
+        <div>
+            <h3><%= result.vocabulary %></h3>
+            <p>Your Answer: <%= result.userAnswer %></p>
+            <p>
+                <% if (result.correct) { %>
+                    <span style="color: green;">Correct!</span>
+                <% } else { %>
+                    <span style="color: red;">Incorrect.</span>
+                <% } %>
+            </p>
+        </div>
+    <% }) %>
+</body>
+</html>

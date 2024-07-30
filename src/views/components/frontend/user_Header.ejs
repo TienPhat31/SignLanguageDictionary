@@ -1,0 +1,89 @@
+<header style="padding-top: 20px;" class="header">
+    <div class="container">
+        <nav class="navbar navbar-default yamm">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="logo-normal">
+                    <a class="navbar-brand" href="/user/home"><img style="height: 100%;"
+                            src="/assets/img/kaiadmin/Logo.png" alt=""></a>
+                </div>
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/user/topic">Chủ đề</a></li>
+                    <li><a href="/user/list-vocabulary-alphabet">Bảng chữ cái</a></li>
+                    <li><a href="/user/list-vocabulary">Từ vựng</a></li>
+                    <li class=" dropdown hassubmenu">
+                        <a href="/user/list-practice">Ôn tập</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/user/list-practice"><i class="fa fa-tablet" aria-hidden="true"></i>
+                                    Luyện tập</a></li>
+                            <li><a href="/user/list-practice-ai"><i class="fa fa-video-camera" aria-hidden="true"></i>
+                                    Luyện tập với AI</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/user/news">Tin tức</a></li>
+                    <li><a href="/user/contact-us">Liên hê</a></li>
+
+                    <% if (user) { %>
+                        <li class=" dropdown hassubmenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">
+                                <span class="fa fa-user-circle-o"></span>
+                                <%= user.user_full_name %>
+                            </a>    
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/user/profile/<%= user._id %>"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                                        Thông tin cá nhân</a></li>
+                                <li><a href="/user/list-favorite-vocabulary"><i style="color: red;" class="fa fa-heart"
+                                            aria-hidden="true"></i>
+                                        Danh sách yêu thích</a></li>
+                                <li><a href="#" onclick="logout(event)"><i class="fa fa-sign-out"
+                                            aria-hidden="true"></i>
+                                        Đăng
+                                        xuất</a></li>
+                            </ul>
+                        </li>
+                        <% } else { %>
+                            <!-- Hiển thị khi chưa đăng nhập -->
+                            <li><a href="/user/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng
+                                    nhập</a></li>
+                            <li><a href="/user/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Đăng
+                                    ký</a></li>
+                            <% } %>
+                </ul>
+            </div>
+        </nav><!-- end navbar -->
+    </div><!-- end container -->
+</header>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    function logout(event) {
+        event.preventDefault(); // Ngăn không cho liên kết thực hiện hành động mặc định
+
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn đăng xuất?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đăng xuất',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/user/logout'; // Thay đổi URL theo cần thiết của bạn
+            }
+        });
+    }
+
+</script>

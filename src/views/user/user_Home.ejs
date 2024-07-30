@@ -1,0 +1,390 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+    <!-- CSS cho chủ đề -->
+    <style>
+        .caro-item {
+            width: 100%;
+            max-width: 300px;
+            /* Đặt chiều rộng tối đa cho các mục */
+            height: 450px;
+            /* Chiều cao cố định */
+            overflow: hidden;
+            /* Đảm bảo nội dung không vượt ra ngoài khung */
+            margin: 0 auto;
+            /* Căn giữa các mục */
+        }
+
+        .course-box {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .image-wrap {
+            height: 60%;
+            /* Chiều cao phần hình ảnh */
+            overflow: hidden;
+        }
+
+        .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Đảm bảo hình ảnh lấp đầy khung */
+        }
+
+        .course-details {
+            padding: 10px;
+            height: 30%;
+            /* Chiều cao phần chi tiết */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Đảm bảo văn bản không vượt quá khung */
+        }
+
+        .course-footer {
+            padding: 10px;
+            height: 10%;
+            /* Chiều cao phần footer */
+        }
+    </style>
+
+    <!-- CSS cho thanh SEARCH -->
+    <style>
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 20px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: 1s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Từ điển ngôn ngữ kí hiệu</p>
+                        <small>Tìm kiếm ngôn ngữ ký hiệu Việt Nam - ngôn ngữ dấu hiệu - thủ ngữ - ngôn ngữ bằng tay của
+                            người câm điếc và khiếm thính. Cơ bản và nâng cao. Hỗ trợ trong dạy và học ngôn ngữ ký
+                            hiệu</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Đọc thêm</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Thanh tìm kiếm -->
+            <section class="section db p120" style="background-color: white;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center">
+                                <div class="search-container">
+                                    <input type="text" id="searchInput" placeholder="Tìm kiếm từ vựng...">
+                                    <button onclick="searchVocabulary()">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hiển thị tin tức -->
+            <section class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="content blog-list">
+                                <div class="blog-wrapper clearfix">
+                                    <div class="blog-meta">
+                                        <small><a href="#">TIN TỨC VỀ NGÔN NGỮ KÍ HIỆU</a></small>
+                                        <h1><a href="/user/news" title="">Bé một tuổi giao tiếp ký hiệu với
+                                                người cha bị điếc</a></h1>
+                                        <ul class="list-inline">
+                                            <li>6 giờ trước</li>
+                                            <li><span>Tác giả</span> <a href="#">HUYỀN LÊ (THEO INDEPENDENT)</a></li>
+                                        </ul>
+                                    </div><!-- end blog-meta -->
+
+                                    <div class="blog-media">
+                                        <a href="#" title=""><img style="height: 450px;" src="/frontend/user/new1.jpg"
+                                                alt="" class="img-responsive img-rounded"></a>
+                                    </div><!-- end media -->
+
+                                    <div class="blog-desc-big">
+                                        <p class="lead">Madison dùng ngôn ngữ ký hiệu với cha trong video được chia sẻ
+                                            ngày 11/11</p>
+                                        <p>Ngôn ngữ ký hiệu hay ngôn ngữ dấu hiệu, thủ ngữ là ngôn ngữ dùng những
+                                            biểu
+                                            hiện
+                                            của bàn tay thay cho âm thanh của tiếng nói. Ngôn ngữ ký hiệu do người
+                                            điếc
+                                            tạo
+                                            ra nhằm giúp họ có thể giao tiếp với nhau trong cộng đồng của mình và
+                                            tiếp
+                                            thu
+                                            tri thức của xã hội..</p>
+                                        <a href="/user/news" class="btn btn-primary">Đọc thêm</a>
+                                    </div><!-- end desc -->
+                                </div><!-- end blog -->
+                            </div><!-- end content -->
+                        </div><!-- end col -->
+
+                        <div class="sidebar col-md-5">
+                            <div class="widget clearfix">
+                                <div class="banner-widget">
+                                    <img style="width: 100%" src="/frontend/user/NNKH.jpg" alt=""
+                                        class="img-responsive img-rounded">
+                                </div>
+                            </div>
+
+                            <div class="widget clearfix">
+                                <h3 class="widget-title">Tin tức liên quan </h3>
+                                <div class="post-widget">
+
+                                    <div class="media">
+                                        <img style="height: 100px; width: 200px" src="/frontend/user/new2.jpg" alt=""
+                                            class="img-responsive alignleft img-rounded">
+                                        <div class="media-body">
+                                            <h5 class="mt-0"><a href="/user/news">Cô gái khiếm thính trở thành
+                                                    tiến sĩ ngôn ngữ</a></h5>
+                                            <div class="blog-meta">
+                                                <ul class="list-inline">
+                                                    <li>4 days ago</li>
+                                                </ul>
+                                            </div><!-- end blog-meta -->
+                                        </div>
+                                    </div>
+
+                                    <div class="media">
+                                        <img style="height: 11  0px; width: 200px" src="/frontend/user/new3.jpg" alt=""
+                                            class="img-responsive alignleft img-rounded">
+                                        <div class="media-body">
+                                            <h5 class="mt-0"><a href="/user/news">Khỉ đột dùng ký hiệu giao tiếp với
+                                                    người xem tại sở thú Mỹ
+                                                    Pro..</a></h5>
+                                            <div class="blog-meta">
+                                                <ul class="list-inline">
+                                                    <li>5 days ago</li>
+                                                </ul>
+                                            </div><!-- end blog-meta -->
+                                        </div>
+                                    </div>
+                                    <div class="media">
+                                        <img style="height: 100px; width: 200px"
+                                            src="/images/656ffbdb1ef43b2aea40eea6-1721963269666.jpg" alt=""
+                                            class="img-responsive alignleft img-rounded">
+                                        <div class="media-body">
+                                            <h5 class="mt-0"><a href="/user/news">Hệ thống dịch ngôn ngữ kí
+                                                    hiệu</a></h5>
+                                            <div class="blog-meta">
+                                                <ul class="list-inline">
+                                                    <li>4 days ago</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            < </div>
+                        </div>
+            </section>
+
+            <!-- CHỦ ĐỀ -->
+            <section class="section gb">
+                <div class="container">
+                    <div class="section-title text-center">
+                        <h1 style="font-size: 50px;">Học <span style="font-weight: bold;">Ngôn Ngữ Ký Hiệu</span>
+                            theo
+                            chủ đề</h1>
+                        <p style="font-size: 22px;">Danh sách hơn 200 chủ đề về mọi lĩnh vực trong cuộc sống</p>
+                    </div>
+
+                    <div id="owl-01" class="owl-carousel owl-theme owl-theme-01">
+
+                        <% topics.forEach(topic=> { %>
+                            <div class="caro-item">
+                                <div class="course-box">
+                                    <div lass="image-wrap entry">
+                                        <img style=" height: 280px;" src="/images/<%= topic.topic_image %>" alt=""
+                                            class="img-responsive">
+
+                                        <div class="magnifier">
+                                            <a href="#" title=""><i class="flaticon-add"></i></a>
+                                        </div>
+                                    </div><!-- end image-wrap -->
+                                    <div class="course-details">
+                                        <h4>
+                                            <small>
+                                                <%= topic.topic_name %>
+                                            </small>
+                                            <a href="#" title="">
+                                                <%= topic.topic_name %>
+                                            </a>
+                                        </h4>
+                                        <p>
+                                            <%= topic.topic_description %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                    </div>
+                    <hr class="invis">
+
+                    <div class="section-button text-center">
+                        <a href="/user/topic" class="btn btn-primary">Xem tất cả chủ đề</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Từ vựng -->
+            <section class="section gb" style="padding-top: 20px;">
+                <div class="container">
+                    <div class="section-title text-center">
+                        <h1 style="font-size: 50px;">Từ phổ biến</h1>
+                    </div><!-- end title -->
+
+                    <div class="row">
+                        <% vocabularys.slice(0, 9).forEach(vocabulary=> { %>
+                            <div class="col-lg-4 col-md-12" style="margin-bottom: 20px;">
+                                <div class="blog-box">
+                                    <div class="image-wrap entry">
+                                        <video style="height: 200px; width: 100%; object-fit: cover;"
+                                            src="<%= vocabulary.vocabulary_video_link.replace('src\\public', '' ) %>"></video>
+                                        <div class="magnifier">
+                                            <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
+                                        </div>
+                                    </div><!-- end image-wrap -->
+
+                                    <div class="blog-desc">
+                                        <h3 style="color: #01bacf; margin:0px">
+                                            <%= vocabulary.vocabulary_topic %>
+                                        </h3>
+                                        <h1 style="margin: 0px;"><a href="blog-single.html"></a>
+                                            <%= vocabulary.vocabulary_name %>
+                                        </h1>
+                                        <small>
+                                            <%= new Date(vocabulary.createdAt).toLocaleDateString('vi-VN', {
+                                                year: 'numeric' , month: 'short' , day: 'numeric' }) %>
+                                        </small>
+                                    </div><!-- end blog-desc -->
+                                </div><!-- end blog -->
+                            </div><!-- end col -->
+                            <% }); %>
+                    </div><!-- end row -->
+
+                    <div class="section-button text-center">
+                        <a href="/user/list-vocabulary" class="btn btn-primary">Xem tất cả từ vựng</a>
+                    </div>
+                </div><!-- end container -->
+            </section>
+
+            <!-- FOOTER -->
+            <%- include('../components/frontend/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+
+    <script>
+        function searchVocabulary() {
+            const input = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            if (input) {
+                // Chuyển hướng người dùng đến API với từ khóa tìm kiếm
+                window.location.href = `/user/list-vocabulary-letter/${input}`;
+            } else {
+                alert("Vui lòng nhập từ vựng để tìm kiếm!");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

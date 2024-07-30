@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Recommended Vocabulary</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+</head>
+<body>
+    <h1>List of Recommended Vocabulary</h1>
+
+    <!-- Form to Add New Vocabulary Recommendation -->
+    <form action="/add-recommendation-vocabulary" method="POST">
+        <div>
+            <label for="vocabulary">Vocabulary:</label>
+            <input type="text" id="vocabulary" name="vocabulary" required>
+        </div>
+        <div>
+            <label for="vocabulary_difficulty_level">Difficulty Level:</label>
+            <input type="text" id="vocabulary_difficulty_level" name="vocabulary_difficulty_level" required>
+        </div>
+        <div>
+            <label for="vocabulary_video_link">Video Link:</label>
+            <input type="url" id="vocabulary_video_link" name="vocabulary_video_link" required>
+        </div>
+        <button type="submit">Add Vocabulary</button>
+    </form>
+
+    <!-- Table to Display Recommended Vocabulary -->
+    <table>
+        <thead>
+            <tr>
+                <th>Vocabulary</th>
+                <th>Difficulty Level</th>
+                <th>Video Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (list_recommendation_vocabulary.length > 0) { %>
+                <% list_recommendation_vocabulary.forEach(vocab => { %>
+                    <tr>
+                        <td><%= vocab.vocabulary %></td>
+                        <td><%= vocab.vocabulary_difficulty_level %></td>
+                        <td><a href="<%= vocab.vocabulary_video_link %>" target="_blank">Video Link</a></td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="3">No recommended vocabulary found</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

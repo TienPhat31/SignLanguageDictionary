@@ -1,0 +1,344 @@
+<!-- <button type="button" onclick="init()">Start</button>
+<div id="webcam-container"></div>
+<div>Từ đang hiển thị: <span id="label-container"></span></div>
+<div>Từ cần đoán: <span id="currentWord"></span></div>
+<div>AI message: <span id="message"></span></div>
+<div>Score: <span id="score"></span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    const URL = "/models/";
+
+    let model, webcam, labelContainer, maxPredictions;
+    let shuffledListPractice = <%- JSON.stringify(shuffled_list_practice) %>;
+    let currentIndex = 0;
+    let score = 0;
+
+    // Load the image model and setup the webcam
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        const flip = true;
+        webcam = new tmImage.Webcam(200, 200, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+
+        updateWord();
+        updateScore();
+    }
+
+    async function loop() {
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+        const prediction = await model.predictTopK(webcam.canvas, 1);
+        const predictedLabel = prediction[0].className;
+        const confidenceScore = (prediction[0].probability * 100).toFixed(2);
+
+        labelContainer.innerText = `${predictedLabel} (Confidence: ${confidenceScore}%)`;
+        checkMatch(predictedLabel);
+    }
+
+    function updateWord() {
+        if (shuffledListPractice.length > 0 && currentIndex < shuffledListPractice.length) {
+            document.getElementById('currentWord').innerText = shuffledListPractice[currentIndex].vocabulary.vocabulary_name;
+        } else {
+            document.getElementById('message').innerText = 'No more words!';
+        }
+    }
+
+    function checkMatch(predictedLabel) {
+        const currentWord = shuffledListPractice[currentIndex].vocabulary.vocabulary_name;
+        if (predictedLabel === currentWord) {
+            score += 10;
+            document.getElementById('message').innerText = 'Correct! You have +10 score! Moving to the next word...';
+            updateScore();
+            currentIndex++;
+            updateWord();
+        } else {
+            document.getElementById('message').innerText = 'Try again!';
+        }
+    }
+
+    function updateScore() {
+        document.getElementById('score').innerText = score;
+    }
+</script> -->
+
+
+
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <style>
+        #webcam-container {
+            width: 100%;
+            /* Hoặc bạn có thể đặt width cụ thể, ví dụ: 400px */
+            height: 500px;
+            /* Đặt chiều cao cố định cho webcam-container */
+            border: 2px solid #ddd;
+            /* Khung bao quanh với màu và độ dày */
+            border-radius: 8px;
+            /* Bo góc của khung (nếu muốn) */
+            overflow: hidden;
+            /* Ẩn phần nội dung vượt ra ngoài khung */
+            margin-bottom: 20px;
+            /* Khoảng cách dưới khung */
+            display: flex;
+            /* Để căn giữa nội dung bên trong */
+            align-items: center;
+            /* Căn giữa theo chiều dọc */
+            justify-content: center;
+            /* Căn giữa theo chiều ngang */
+            background-color: #f9f9f9;
+            /* Màu nền của khung (tuỳ chọn) */
+        }
+
+        #webcam-container canvas {
+            width: 100%;
+            /* Đảm bảo canvas bao phủ toàn bộ chiều rộng của #webcam-container */
+            height: 100%;
+            /* Đảm bảo canvas bao phủ toàn bộ chiều cao của #webcam-container */
+        }
+
+        .info-wrapper {
+            display: flex;
+            justify-content: space-between;
+            /* Phân phối không gian giữa hai phần tử */
+            align-items: center;
+            /* Căn giữa theo chiều dọc */
+            margin-bottom: 20px;
+            /* Khoảng cách dưới cùng của phần tử */
+        }
+
+        .info-left {
+            display: flex;
+            flex-direction: column;
+            /* Sắp xếp các phần tử con theo chiều dọc */
+        }
+
+        .info-right {
+            display: flex;
+            align-items: center;
+            /* Căn giữa theo chiều dọc */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Từ điển ngôn ngữ kí hiệu</p>
+                        <h2 style="margin:0px; color: rgb(201, 201, 201)">Luyện tập Ngôn Ngữ Kí Hiệu với AI
+                        </h2>
+                        <small>Tìm kiếm ngôn ngữ ký hiệu Việt Nam - ngôn ngữ dấu hiệu - thủ ngữ - ngôn ngữ bằng tay của
+                            người câm điếc và khiếm thính. Cơ bản và nâng cao. Hỗ trợ trong dạy và học ngôn ngữ ký
+                            hiệu</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Đọc thêm</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="section">
+                <div class="container">
+                    <!-- Bắt đầu phần hiển thị webcam và kết quả nhận diện -->
+                    <div class="row" id="practiceItem">
+                        <h1 style="text-align: center; margin-top: 5px; margin-bottom: 50px; font-size: 50px">Luyện tập
+                            với AI</h1>
+                        <div class="col-lg-12">
+                            <div id="webcam-container"></div>
+                            <div class="info-wrapper">
+                                <div class="info-left">
+                                    <div
+                                        style="font-size: 20px; font-weight: bold; color: black; padding-bottom: 20px;">
+                                        Từ đang hiển thị: <span id="label-container"></span>
+                                    </div>
+                                    <div
+                                        style="font-size: 20px; font-weight: bold; color: black; padding-bottom: 20px;">
+                                        Từ cần đoán: <span id="currentWord"></span>
+                                    </div>
+                                    <div
+                                        style="font-size: 20px; font-weight: bold; color: black; padding-bottom: 20px;">
+                                        AI message: <span id="message"></span>
+                                    </div>
+                                    <button type="button" style="font-size: 19px; margin-bottom: 20px;"
+                                        class="btn btn-primary" onclick="init()">Bắt đầu</button>
+                                    <button type="button" style="font-size: 19px; margin-bottom: 20px;"
+                                        class="btn btn-warning"><a style="color: white;" href="/user/list-practice-ai">Thử
+                                            lại</a></button>
+                                </div>
+                                <div class="info-right">
+                                    <button class="btn btn-danger"
+                                        style="font-size: 19px; font-weight: bold; color: black; margin-bottom: 20px;">
+                                        Điểm số: <span id="score"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="invis">
+                </div>
+            </section>
+            <!-- FOOTER -->
+            <%- include('../components/frontend/user_Footer') %>
+
+    </div>
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    const URL = "/models/";
+
+    let model, webcam, labelContainer, maxPredictions;
+    let shuffledListPractice = <%- JSON.stringify(shuffled_list_practice) %>;
+    let currentIndex = 0;
+    let score = 0;
+
+    // Load the image model and setup the webcam
+    async function init() {
+        try {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            const flip = true;
+            webcam = new tmImage.Webcam(500, 500, flip); // Đảm bảo kích thước phù hợp
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+
+            updateWord();
+            updateScore();
+        } catch (error) {
+            console.error("Error initializing the webcam or model:", error);
+        }
+    }
+
+    async function loop() {
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+        try {
+            const prediction = await model.predictTopK(webcam.canvas, 1);
+            const predictedLabel = prediction[0].className;
+            const confidenceScore = (prediction[0].probability * 100).toFixed(2);
+
+            labelContainer.innerText = `${predictedLabel} (Độ chính xác: ${confidenceScore}%)`;
+            checkMatch(predictedLabel);
+        } catch (error) {
+            console.error("Error predicting:", error);
+        }
+    }
+
+    function updateWord() {
+        if (shuffledListPractice.length > 0 && currentIndex < shuffledListPractice.length) {
+            document.getElementById('currentWord').innerText = shuffledListPractice[currentIndex].vocabulary.vocabulary_name;
+        } else {
+            document.getElementById('message').innerText = 'No more words!';
+        }
+    }
+
+    function checkMatch(predictedLabel) {
+        const currentWord = shuffledListPractice[currentIndex].vocabulary.vocabulary_name;
+        if (predictedLabel === currentWord) {
+            score += 10;
+            document.getElementById('message').innerText = 'Correct! You have +10 score! Moving to the next word...';
+            updateScore();
+            currentIndex++;
+            updateWord();
+        } else {
+            document.getElementById('message').innerText = 'Thử lại';
+        }
+    }
+
+    function updateScore() {
+        document.getElementById('score').innerText = score;
+    }
+</script>
+
+
+</html>

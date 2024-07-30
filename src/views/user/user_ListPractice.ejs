@@ -1,0 +1,258 @@
+
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Từ điển ngôn ngữ kí hiệu</p>
+                        <h2 style="margin:0px; color: rgb(201, 201, 201)">Luyện tập Ngôn Ngữ Kí Hiệu
+                        </h2>
+                        <small>Tìm kiếm ngôn ngữ ký hiệu Việt Nam - ngôn ngữ dấu hiệu - thủ ngữ - ngôn ngữ bằng tay của
+                            người câm điếc và khiếm thính. Cơ bản và nâng cao. Hỗ trợ trong dạy và học ngôn ngữ ký
+                            hiệu</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Đọc thêm</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="">
+                        <div class="row" id="practiceItem">
+                            <h1 style="text-align: center; margin-top: 5px; margin-bottom: 50px; font-size: 50px">Luyện
+                                tập</h1>
+
+                            <div id="questionTracker" style="text-align: right; margin-bottom: 20px; font-size: 20px;">
+                                Câu hỏi: <span id="currentQuestionIndex">1</span>/<span id="totalQuestions">
+                                    <%= shuffled_list_practice.length %>
+                                </span>
+                            </div>
+                            <div class="col-md-6 shop-media">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="image-wrap entry">
+                                            <video style="height: 100%;" class="img-responsive"
+                                                src="<%= shuffled_list_practice[0].vocabulary_video_link.replace('src\\public', '') %>"
+                                                controls></video>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="invis">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="shop-desc">
+                                    <h3>Đáp án của bạn</h3>
+                                    <form id="practiceForm" action="/user/result-practice" method="POST">
+                                        <input
+                                            style="width:100%; padding:10px; border-radius: 10px; margin-bottom: 20px; color: black"
+                                            type="text" name="answer" placeholder="Điền đáp án của bạn ở đây"
+                                            id="userAnswer" required>
+                                        <button type="button" id="nextButton" class="btn btn-primary">Từ tiếp
+                                            theo</button>
+                                        <button type="submit" id="submitButton" class="btn btn-success"
+                                            style="display: none;">Gửi đáp án</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="invis">
+                    </div>
+
+                    <!-- SHOW KẾT QUẢ -->
+                    <div class="row" id="resultSection" style="display: none;">
+                        <div class="col-md-12">
+                            <div class="shop-extra">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#result">Kết quả</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Câu hỏi</th>
+                                                <th>Câu trả lời của bạn</th>
+                                                <th>Đáp án</th>
+                                                <th>Kết quả</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="resultTableBody">
+
+                                        </tbody>
+                                    </table>
+                                    <div id="resultSummary">
+
+                                    </div>
+                                    <!-- Thi lại -->
+                                    <a href="/user/list-practice"><button id="retryButton" class="btn btn-primary"
+                                            style="display: none; margin-top: 20px;">Luyện tập lại</button></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <%- include('../components/frontend/user_Footer') %>
+
+    </div>
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+
+    <script>
+        const shuffledListPractice = <%- JSON.stringify(shuffled_list_practice) %>;
+        let currentIndex = 0;
+        const answers = [];
+
+        function updatePracticeItem() {
+            const userAnswerInput = document.getElementById('userAnswer').value.trim();
+            if (userAnswerInput) {
+                // Lưu câu trả lời hiện tại
+                answers.push({
+                    question: shuffledListPractice[currentIndex].vocabulary_name,
+                    answer: userAnswerInput,
+                    correctAnswer: shuffledListPractice[currentIndex].vocabulary_name
+                });
+
+                currentIndex++;
+                if (currentIndex < shuffledListPractice.length) {
+                    const currentVocab = shuffledListPractice[currentIndex];
+                    document.querySelector('.shop-media video').src = currentVocab.vocabulary_video_link.replace('src\\public', '');
+                    document.getElementById('userAnswer').value = ''; // Clear the input field
+                    document.getElementById('currentQuestionIndex').textContent = currentIndex + 1;
+
+                    if (currentIndex === shuffledListPractice.length - 1) {
+                        document.getElementById('nextButton').style.display = 'none';
+                        document.getElementById('submitButton').style.display = 'block';
+                    }
+                }
+            } else {
+                alert('Vui lòng nhập câu trả lời của bạn!');
+            }
+        }
+
+        document.getElementById('nextButton').addEventListener('click', updatePracticeItem);
+
+        document.getElementById('practiceForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn form tự động submit
+
+            // Lưu câu trả lời cuối cùng nếu có
+            const userAnswerInput = document.getElementById('userAnswer').value.trim();
+            if (userAnswerInput) {
+                answers.push({
+                    question: shuffledListPractice[currentIndex].vocabulary_name,
+                    answer: userAnswerInput,
+                    correctAnswer: shuffledListPractice[currentIndex].vocabulary_name
+                });
+            }
+
+            document.getElementById('submitButton').style.display = 'none';
+
+
+            // Gửi dữ liệu lên server
+            fetch('/user/result-practice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userAnswers: answers })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    // Hiển thị phần kết quả
+                    document.getElementById('resultSection').style.display = 'block';
+
+                    // Cập nhật bảng kết quả
+                    const resultTableBody = document.getElementById('resultTableBody');
+                    resultTableBody.innerHTML = answers.map(answer => `
+                        <tr>
+                            <td>${answer.question}</td>
+                            <td>${answer.answer}</td>
+                            <td>${answer.correctAnswer}</td>
+                            <td>${answer.answer.toLowerCase() === answer.correctAnswer.toLowerCase() ? 'Đúng' : 'Sai'}</td>
+                        </tr>
+                    `).join('');
+
+                    // Cập nhật tổng kết
+                    const resultSummary = document.getElementById('resultSummary');
+                    resultSummary.innerHTML = `<p>Số câu trả lời đúng: ${result.correct}/${result.total}</p>`;
+                    document.getElementById('retryButton').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

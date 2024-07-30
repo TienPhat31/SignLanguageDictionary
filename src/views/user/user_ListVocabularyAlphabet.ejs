@@ -1,0 +1,305 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Edulogy</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+    <style>
+        .video-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+
+    <!-- CSS cho thanh SEARCH -->
+    <style>
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 20px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: 1s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Từ điển ngôn ngữ kí hiệu</p>
+                        <small>Tìm kiếm ngôn ngữ ký hiệu Việt Nam - ngôn ngữ dấu hiệu - thủ ngữ - ngôn ngữ bằng tay của
+                            người câm điếc và khiếm thính. Cơ bản và nâng cao. Hỗ trợ trong dạy và học ngôn ngữ ký
+                            hiệu</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Đọc thêm</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Thanh tìm kiếm -->
+            <section class="section db p120" style="background-color: white;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center">
+                                <div class="search-container">
+                                    <input type="text" id="searchInput" placeholder="Tìm kiếm từ vựng...">
+                                    <button onclick="searchVocabulary()">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="section lb p120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center">
+                                <h3>Bảng chứ cái NGÔN NGỮ KÍ HIỆU</h3>
+                                <ul class="breadcrumb">
+                                    <li><a href="javascript:void(0)">Trang chủ</a></li>
+                                    <li class="active">Bảng chữ cái</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Danh sách từ vựng theo Bảng Chữ Cái -->
+            <section class="section gb nopadtop">
+                <div class="container">
+                    <div class="boxed boxedp4">
+                        <div class="shop-top">
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                    <p> Showing 1–<%= list_vocabulary_length %> of <%= list_vocabulary_length %> results
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row blog-grid shop-grid">
+                            <% list_vocabulary.forEach(vocabulary=> { %>
+                                <div class="col-md-3">
+                                    <div class="course-box shop-wrapper">
+                                        <div class="image-wrap entry">
+                                            <a href="/user/detail-vocabulary/<%= vocabulary._id %>">
+                                                <div class="video-container">
+                                                    <video class="img-responsive"
+                                                        src="<%= vocabulary.vocabulary_video_link.replace('src\\public', '' ) %>"
+                                                        muted></video>
+                                                    <div class="countdown" id="countdown-<%= vocabulary._id %>">3</div>
+                                                </div>
+                                            </a>
+
+                                        </div>
+                                        <!-- end image-wrap -->
+                                        <div class="course-details shop-box text-center">
+                                            <h4>
+                                                <a href="/user/detail-vocabulary/<%= vocabulary._id %>" title="">
+                                                    <%= vocabulary.vocabulary_name %>
+                                                </a>
+                                                <small>
+                                                    <%= vocabulary.vocabulary_topic %>
+                                                </small>
+                                            </h4>
+                                        </div>
+                                        <!-- end details -->
+                                        <div class="course-footer clearfix">
+                                            <div class="pull-left">
+                                                <ul class="list-inline">
+                                                    <li>Độ khó:
+                                                        <% for (let i=0; i < vocabulary.vocabulary_difficulty_level;
+                                                            i++) { %>
+                                                            <i class="fa fa-star"></i>
+                                                            <% } %>
+                                                    </li>
+                                                </ul>
+                                                <ul style="margin-top: 10px;" class="list-inline">
+                                                    <li><a href="#"><i class="fa fa-heart-o"></i> Yêu thích </a></li>
+                                                </ul>
+                                            </div><!-- end left -->
+                                        </div><!-- end footer -->
+                                    </div><!-- end box -->
+                                </div><!-- end col -->
+                                <% }); %>
+                        </div><!-- end row -->
+
+                        <hr class="invis">
+
+                        <div class="row text-center">
+                            <div class="col-md-12">
+                                <ul class="pagination">
+                                    <li class="disabled"><a href="javascript:void(0)">&laquo;</a></li>
+                                    <li class="active"><a href="javascript:void(0)">1</a></li>
+                                    <li><a href="javascript:void(0)">2</a></li>
+                                    <li><a href="javascript:void(0)">3</a></li>
+                                    <li><a href="javascript:void(0)">...</a></li>
+                                    <li><a href="javascript:void(0)">&raquo;</a></li>
+                                </ul>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div>
+                </div><!-- end container -->
+            </section>
+
+            <!-- FOOTER -->
+            <%- include('../components/frontend/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const videos = document.querySelectorAll('.video-container');
+
+            videos.forEach(container => {
+                let timer;
+                const video = container.querySelector('video');
+                const countdownElement = container.querySelector('.countdown');
+
+                video.addEventListener('mouseenter', () => {
+                    let count = 3;
+                    countdownElement.textContent = count;
+                    countdownElement.style.display = 'block';
+
+                    timer = setInterval(() => {
+                        count--;
+                        countdownElement.textContent = count;
+
+                        if (count <= 0) {
+                            clearInterval(timer);
+                            countdownElement.style.display = 'none';
+                            video.play();
+                        }
+                    }, 1000); // Update every second
+                });
+
+                video.addEventListener('mouseleave', () => {
+                    clearInterval(timer);
+                    countdownElement.style.display = 'none';
+                    video.pause();
+                    video.currentTime = 0; // Reset video to the start
+                });
+            });
+        });
+
+    </script>
+
+    <script>
+        function searchVocabulary() {
+            const input = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            if (input) {
+                // Chuyển hướng người dùng đến API với từ khóa tìm kiếm
+                window.location.href = `/user/list-vocabulary-letter/${input}`;
+            } else {
+                alert("Vui lòng nhập từ vựng để tìm kiếm!");
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

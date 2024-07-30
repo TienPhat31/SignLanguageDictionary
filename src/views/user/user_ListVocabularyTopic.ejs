@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary List</title>
+</head>
+<body>
+    <h1>Vocabulary List by Topic</h1>
+    <ul>
+        <% list_vocabulary_topic.forEach(item => { %>
+            <li><a href="/user/detail-vocabulary/<%= item._id %>"><%= item.vocabulary_name %></a></li>
+        <% }) %>
+    </ul>
+    <a href="/user/list-topic">Back to topics</a>
+</body>
+</html>

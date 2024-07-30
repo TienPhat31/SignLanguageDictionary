@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Favorite</title>
+</head>
+<body>
+    <h1>List of Favorite</h1>
+    <ul>
+        <% list_vocabulary_user.forEach(item => { %>
+            <li>
+                <a href="/user/detail-vocabulary/<%= item._id %>"><%= item.vocabulary %></a>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

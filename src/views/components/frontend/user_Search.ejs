@@ -1,0 +1,28 @@
+<!-- Thanh tìm kiếm -->
+<section class="section db p120" style="background-color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tagline-message page-title text-center">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm từ vựng...">
+                        <button onclick="searchVocabulary()">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function searchVocabulary() {
+        const input = document.getElementById('searchInput').value.trim().toLowerCase();
+
+        if (input) {
+            // Chuyển hướng người dùng đến API với từ khóa tìm kiếm
+            window.location.href = `/user/list-vocabulary-letter/${input}`;
+        } else {
+            alert("Vui lòng nhập từ vựng để tìm kiếm!");
+        }
+    }
+</script>

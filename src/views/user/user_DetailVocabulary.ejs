@@ -1,0 +1,358 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vocabulary Detail</title>
+</head>
+
+<body>
+    <h1>Vocabulary Detail</h1>
+    <p><strong>Vocabulary:</strong>
+        <%= vocabulary.vocabulary_name %>
+    </p>
+    <p><strong>Difficulty Level:</strong>
+        <%= vocabulary.vocabulary_difficulty_level %>
+    </p>
+    <p><strong>Video Link:</strong> <a href="<%= vocabulary.vocabulary_video_link %>">Video Link</a></p>
+
+    <form id="addVocabularyForm">
+        <input type="hidden" id="vocabularyId" value="<%= vocabulary._id %>">
+        <button type="submit">Add to Favorites</button>
+    </form>
+
+    <script>
+        document.getElementById('addVocabularyForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const vocabularyId = document.getElementById('vocabularyId').value;
+
+            try {
+                const response = await fetch('/add-vocabulary-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ vocabularyId }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Vocabulary added to favorites successfully!');
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        });
+    </script>
+</body>
+
+</html> -->
+
+
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+    <style>
+        .video-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('../components/frontend/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Từ điển ngôn ngữ kí hiệu</p>
+                        <h2 style="margin:0px; color: rgb(201, 201, 201)">Hướng dẫn thực hiện ký hiệu cho từ <%=
+                                vocabulary.vocabulary_name %>
+                        </h2>
+                        <small>Tìm kiếm ngôn ngữ ký hiệu Việt Nam - ngôn ngữ dấu hiệu - thủ ngữ - ngôn ngữ bằng tay của
+                            người câm điếc và khiếm thính. Cơ bản và nâng cao. Hỗ trợ trong dạy và học ngôn ngữ ký
+                            hiệu</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Đọc thêm</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="section cb">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="tagline-message page-title">
+                                <h3>Chi tiết</h3>
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-md-6 text-right">
+                            <ul class="breadcrumb">
+                                <li style="font-size: 20px;"><a href="javascript:void(0)">Bảng chữ cái</a></li>
+                                <li style="font-size: 15px;" class="active">Chi tiết</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="section">
+                <div class="container">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-6 shop-media">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="image-wrap entry">
+                                            <video style="height: 100%;" class="img-responsive"
+                                                src="<%= vocabulary.vocabulary_video_link.replace('src\\public', '' ) %>"
+                                                controls></video>
+                                        </div>
+                                    </div>
+                                </div><!-- end row -->
+                            </div><!-- end col -->
+
+                            <div class="col-md-6">
+                                <div class="shop-desc">
+                                    <h2>
+                                        <%= vocabulary.vocabulary_name %>
+                                    </h2>
+                                    <small>
+                                        <%= vocabulary.vocabulary_topic %>
+                                    </small>
+                                    <div class="shop-meta">
+                                        <button class="btn btn-primary"><i class="fa fa-heart-o"></i> Yêu
+                                            thích</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="invis">
+
+                        <div class="related-products">
+                            <div class="text-widget">
+                                <h3>Từ liên quan</h3>
+                            </div>
+
+                            <div class="row blog-grid shop-grid">
+                            </div>
+                        </div>
+
+                        <% relatedVocabularies.forEach(related=> { %>
+                            <div class="col-md-3">
+                                <div class="course-box shop-wrapper">
+                                    <div class="image-wrap entry">
+                                        <video style="height: 100%;" class="img-responsive"
+                                            src="<%= related.vocabulary_video_link.replace('src\\public', '' ) %>"
+                                            controls></video>
+                                    </div>
+                                    <!-- end image-wrap -->
+                                    <div class="course-details shop-box text-center">
+                                        <h4>
+                                            <a href="/user/detail-vocabulary/<%= related._id %>" title=""></a>
+                                            <%= related.vocabulary_name %>
+                                                </a>
+                                                <small>
+                                                    <%= related.vocabulary_topic %>
+                                                </small>
+                                        </h4>
+                                    </div>
+                                    <!-- end details -->
+                                </div>
+                            </div>
+                            <% }); %>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content boxed-comment clearfix">
+                                            <h3 class="small-title">Bình luận</h3>
+                                            <form class="big-contact-form">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="name"
+                                                            placeholder="Họ và tên">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input type="email" class="form-control" name="email"
+                                                            placeholder="Email">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <textarea placeholder="Tin nhắn" class="form-control"></textarea>
+                                                    <button class="btn btn-primary" type="submit">SEND COMMENT</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section class="section ">
+                <div class="container">
+                    <div class="boxed">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="content boxed-comment clearfix">
+                                    <h3 class="small-title">Leave a Comment</h3>
+                                    <form class="big-contact-form">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="name"
+                                                    placeholder="Full Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" name="email"
+                                                    placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="website"
+                                                    placeholder="Website">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <textarea placeholder="Your message" class="form-control"></textarea>
+                                            <button class="btn btn-primary" type="submit">SEND COMMENT</button>
+                                        </div>
+                                    </form>
+                                </div><!-- end content -->
+    </div><!-- end col -->
+
+    </div>
+    </div>
+    </div>
+    </section> -->
+
+
+
+    <!-- FOOTER -->
+    <%- include('../components/frontend/user_Footer') %>
+        </div><!-- end wrapper -->
+
+        <!-- jQuery Files -->
+        <script src="/frontend/user/js/jquery.min.js"></script>
+        <script src="/frontend/user/js/bootstrap.min.js"></script>
+        <script src="/frontend/user/js/carousel.js"></script>
+        <script src="/frontend/user/js/animate.js"></script>
+        <script src="/frontend/user/js/custom.js"></script>
+        <!-- VIDEO BG PLUGINS -->
+        <script src="/frontend/user/js/videobg.js"></script>
+
+        <!-- RUN VIDEO AFTER 3S -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const videos = document.querySelectorAll('.video-container');
+
+                videos.forEach(container => {
+                    let timer;
+                    const video = container.querySelector('video');
+                    const countdownElement = container.querySelector('.countdown');
+
+                    video.addEventListener('mouseenter', () => {
+                        let count = 3;
+                        countdownElement.textContent = count;
+                        countdownElement.style.display = 'block';
+
+                        timer = setInterval(() => {
+                            count--;
+                            countdownElement.textContent = count;
+
+                            if (count <= 0) {
+                                clearInterval(timer);
+                                countdownElement.style.display = 'none';
+                                video.play();
+                            }
+                        }, 1000); // Update every second
+                    });
+
+                    video.addEventListener('mouseleave', () => {
+                        clearInterval(timer);
+                        countdownElement.style.display = 'none';
+                        video.pause();
+                        video.currentTime = 0; // Reset video to the start
+                    });
+                });
+            });
+
+        </script>
+
+</body>
+
+</html>
